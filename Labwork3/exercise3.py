@@ -1,86 +1,67 @@
 from exercise1 import Point2D
 from exercise2 import Robot
-from typing import List
-import numpy as np
 from typing import List, Tuple
 
 
 class Board:
     def __init__(
-        self, rows: int, columns: int, point_exit: Point2D, robots_list: List[Robot]
-    ):
-        self.rows = rows
-        self.columns = columns
-        self.point_exit = point_exit
-        self.robots_list = robots_list
-        self.grid = np.array(
-            [
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-                [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-                [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-                [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-                [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-                [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-                [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-                [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-                [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-                [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            ]
-        )
+        self,
+        rows: int,
+        columns: int,
+        point_exit: Point2D,
+        robots_list: List[Robot],
+        grid: List[List[int]],
+    ) -> None:
+        self._rows = rows
+        self._columns = columns
+        self._point_exit = point_exit
+        self._robots_list = robots_list
+        self._grid = grid
 
-    @property
-    def rows(self):
+    def _get_rows(self) -> int:
         return self._rows
 
-    @rows.setter
-    def rows(self, value):
+    def _set_rows(self, value) -> None:
         self._rows = value
 
-    @property
-    def columns(self):
+    def _get_columns(self) -> int:
         return self._columns
 
-    @columns.setter
-    def columns(self, value):
+    def _set_columns(self, value) -> None:
         self._columns = value
 
-    @property
-    def point_exit(self):
+    def _get_point_exit(self) -> Point2D:
         return self._point_exit
 
-    @point_exit.setter
-    def point_exit(self, value):
+    def _set_point_exit(self, value) -> None:
         self._point_exit = value
 
-    @property
-    def grid(self):
+    def grid(self) -> List[List[int]]:
         return self._grid
 
-    @grid.setter
-    def grid(self, value):
+    def _set_grid(self, value) -> None:
         self._grid = value
 
     def __repr__(self):
-        return f"<Rows: {self.rows}, Columns: {self.columns}, Point exit: {self.point_exit}, Robots list: {self.robots_list}>"
+        return f"<Rows: {self._rows}, Columns: {self._columns}, Point exit: {self._point_exit}, Robots list: {self._robots_list}>"
 
     def add_robot(self, robot: Robot):
-        self.robots_list.append(robot)
+        self._robots_list.append(robot)
 
     def remove_robot(self, index: int):
-        del self.robots_list[index]
+        del self._robots_list[index]
 
     def is_inside(self, x: int, y: int) -> bool:
-        return x >= 0 and x < self.rows and y >= 0 and y < self.columns
+        return x >= 0 and x < self._rows and y >= 0 and y < self._columns
 
     def is_not_walled(self, x: int, y: int) -> bool:
         if not self.is_inside(x, y):
             return True
-        return self.grid[x][y]
+        return self._grid[x][y]
 
     def is_robot_position(self, x: int, y: int, robots: List[Robot]) -> bool:
         for robot in robots:
-            if robot.point == Point2D(x, y):
+            if robot._get_point() == Point2D(x, y):
                 return True
         return False
 
@@ -88,13 +69,13 @@ class Board:
         if robots:
             if (self.is_inside(x, y)) and (self.is_robot_position(x, y, robots)):
                 return False
-            
+
             elif (self.is_inside(x, y)) and (not self.is_robot_position(x, y, robots)):
-                if (self.is_not_walled(x, y)):
+                if self.is_not_walled(x, y):
                     return True
                 else:
-                    return False               
-            
+                    return False
+
         else:
             return self.is_inside(x, y) and self.is_not_walled(x, y)
 
@@ -112,9 +93,9 @@ class Board:
             neighbor_loc.append(Point2D(point_x + 1, point_y))
         return neighbor_loc
 
-    def check_points_visited(self, point: Tuple, visited: set) -> bool:
+    def check_points_visited(self, point: Point2D, visited: set) -> bool:
         for p in visited:
-            if point.x == p[0] and point.y == p[1]:
+            if point._get_x() == p[0] and point._get_y() == p[1]:
                 return True
         return False
 
@@ -124,15 +105,14 @@ class Board:
         results = []
         visited = set()
         parent = dict()
-        parent[tuple([robot.point.x, robot.point.y])] = None
-        visited.add(tuple([robot.point.x, robot.point.y]))
-        queue.append(tuple([robot.point.x, robot.point.y]))
-        n = 0
+        parent[tuple([robot._get_point()._get_x(), robot._get_point()._get_y()])] = None
+        visited.add(tuple([robot._get_point()._get_x(), robot._get_point()._get_y()]))
+        queue.append(tuple([robot._get_point()._get_x(), robot._get_point()._get_y()]))
         while queue:
             current_point = queue.pop(0)
             if (
-                current_point[0] == self.point_exit.x
-                and current_point[1] == self.point_exit.y
+                current_point[0] == self._point_exit._get_x()
+                and current_point[1] == self._point_exit._get_y()
             ):
                 path_found = True
                 break
@@ -141,14 +121,16 @@ class Board:
 
             for next_point in adjacent_points:
                 if not self.check_points_visited(next_point, visited):
-                    queue.append(tuple([next_point.x, next_point.y]))
-                    parent[tuple([next_point.x, next_point.y])] = current_point
-                    visited.add(tuple([next_point.x, next_point.y]))
+                    queue.append(tuple([next_point._get_x(), next_point._get_y()]))
+                    parent[
+                        tuple([next_point._get_x(), next_point._get_y()])
+                    ] = current_point
+                    visited.add(tuple([next_point._get_x(), next_point._get_y()]))
             # print("queue: ", queue)
             # print("visited", visited)
             #
 
-        point_exit = [self.point_exit.x, self.point_exit.y]
+        point_exit = [self._point_exit._get_x(), self._point_exit._get_y()]
         if path_found == True:
             results.append(tuple([point_exit[0], point_exit[1]]))
             while parent[tuple([point_exit[0], point_exit[1]])] is not None:
@@ -157,39 +139,47 @@ class Board:
             results.reverse()
         return results
 
-    def move_robot(self):
+    def move_robot(self) -> None:
         all_paths = []
-        num_robots = len(self.robots_list)
+        num_robots = len(self._robots_list)
         for i in range(num_robots - 1):
             path_robot = self.reachable(
-                self.robots_list[i], self.robots_list[i : num_robots - 2]
+                self._robots_list[i], self._robots_list[i : num_robots - 2]
             )
             all_paths.append(path_robot)
-        all_paths.append(self.reachable(self.robots_list[-1], []))
+        all_paths.append(self.reachable(self._robots_list[-1], []))
 
         for i in range(len(all_paths)):
-            print(f"Path for robot {i}: {all_paths[i]}")
+            print(f"Path for robot {i+1}: {all_paths[i]}")
 
 
 if __name__ == "__main__":
-    point = Point2D(5, 6)
-    point1 = Point2D(6, 1)
-    point2 = Point2D(10, 2)
-    point3 = Point2D(2, 8)
-    robot = Robot(name="Alice", point=point)
-    robot1 = Robot(name="Bob", point=point1)
-    robot2 = Robot(name="Lisa", point=point2)
-    robot3 = Robot(name="Florida", point=point3)
+    point1 = Point2D(5, 6)
+    point2 = Point2D(6, 1)
+    point3 = Point2D(10, 2)
+    point4 = Point2D(2, 8)
+    robot1 = Robot(name="Alice", point=point1)
+    robot2 = Robot(name="Bob", point=point2)
+    robot3 = Robot(name="Lisa", point=point3)
+    robot4 = Robot(name="Florida", point=point4)
+    grid = [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+        [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ]
     board = Board(
         rows=11,
         columns=11,
         point_exit=Point2D(10, 1),
-        robots_list=[robot, robot1, robot2, robot3],
+        robots_list=[robot1, robot2, robot3, robot4],
+        grid=grid,
     )
-    # print(board.grid)
-    # print(board)
-    # board.add_robot(robot)
-    # print(board)
-    # board.remove_robot(1)
-    # print(board)
     board.move_robot()

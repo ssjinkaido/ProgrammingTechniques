@@ -1,29 +1,25 @@
 class Point2D:
-    def __init__(self, x=0, y=0):
+    def __init__(self, x: int = 0, y: int = 0) -> None:
         self._x = x
         self._y = y
 
-    @property
-    def x(self):
+    def _get_x(self) -> int:
         return self._x
 
-    @x.setter
-    def x(self, value):
+    def _set_x(self, value) -> None:
         self._x = value
 
-    @property
-    def y(self):
+    def _get_y(self) -> int:
         return self._y
 
-    @y.setter
-    def y(self, value):
+    def set_y(self, value) -> None:
         self._y = value
 
-    def __repr__(self):
-        return f"<Point x: {self.x}, Point y: {self.y}>"
+    def __repr__(self) -> None:
+        return f"<Point x: {self._get_x()}, Point y: {self._get_y()}>"
 
     def __eq__(self, __o: object) -> bool:
-        return self.x == __o.x and self.y == __o.y
+        return self._x == __o._x and self._y == __o._y
 
 
 if __name__ == "__main__":

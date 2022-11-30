@@ -1,29 +1,28 @@
 from exercise1 import Point2D
-class Robot():
-    def __init__(self, name, point:Point2D):
-        self.name = name
-        self.point = point
-    
-    @property
-    def name(self):
+
+
+class Robot:
+    def __init__(self, name: str = "John", point: Point2D = Point2D()) -> None:
+        self._name = name
+        self._point = point
+
+    def _get_name(self) -> str:
         return self._name
 
-    @name.setter
-    def name(self, value):
+    def _set_name(self, value) -> None:
         self._name = value
 
-    @property
-    def point(self):
+    def _get_point(self) -> Point2D:
         return self._point
 
-    @point.setter
-    def point(self, value):
+    def _set_point(self, value) -> None:
         self._point = value
 
     def __repr__(self):
-        return f"<Robot name: {self.name}, Point a: {self.point.x}, Point y: {self.point.y}>"
+        return f"<Robot name: {self._get_name()}, Point a: {self._point._get_x()}, Point y: {self._point._get_y()}>"
+
 
 if __name__ == "__main__":
     point = Point2D(8, 9)
-    robot = Robot(name='Alice', point=point)
+    robot = Robot(name="John", point=point)
     print(robot)
