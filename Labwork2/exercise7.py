@@ -8,10 +8,7 @@ def neighbors_case_1(tray: np.ndarray, square: List) -> List[Tuple]:
     rows = square[0] + n
     cols = square[1] + n
     neighbor_loc = [
-        (x, y)
-        for x in rows
-        for y in cols
-        if (0 <= x <= s[0]) & (0 <= y <= s[1])
+        (x, y) for x in rows for y in cols if (0 <= x <= s[0]) & (0 <= y <= s[1])
     ]
     items_to_remove = [
         (square[0], square[1]),

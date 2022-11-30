@@ -7,7 +7,7 @@ def create_list() -> List:
     return random_list
 
 
-def repeat(word, n):
+def repeat(word, n)->str:
     return (f"{word} " * n)[:-1]
 
 
