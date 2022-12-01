@@ -11,7 +11,7 @@ class Board:
         point_exit: Point2D,
         robots_list: List[Robot],
         grid: List[List[int]],
-    ) -> None:
+    ):
         self._rows = rows
         self._columns = columns
         self._point_exit = point_exit

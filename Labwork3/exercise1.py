@@ -1,5 +1,5 @@
 class Point2D:
-    def __init__(self, x: int = 0, y: int = 0) -> None:
+    def __init__(self, x: int = 0, y: int = 0):
         self._x = x
         self._y = y
 

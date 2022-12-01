@@ -2,7 +2,7 @@ from exercise1 import Point2D
 
 
 class Robot:
-    def __init__(self, name: str = "John", point: Point2D = Point2D()) -> None:
+    def __init__(self, name: str = "John", point: Point2D = Point2D()):
         self._name = name
         self._point = point
 
@@ -18,7 +18,7 @@ class Robot:
     def _set_point(self, value) -> None:
         self._point = value
 
-    def __repr__(self):
+    def __repr__(self)->str:
         return f"<Robot name: {self._get_name()}, Point a: {self._point._get_x()}, Point y: {self._point._get_y()}>"
 
 
