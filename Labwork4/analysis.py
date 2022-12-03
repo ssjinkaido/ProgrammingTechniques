@@ -107,7 +107,18 @@ def plot_question6(
 
 def plot_question7(weight, height):
     fig, ax = plt.subplots(figsize=(10, 6))
-    sns.kdeplot(x=weight, y=height, ax = ax, n_levels = 6, thresh = 0,cbar=True, fill=True, cmap='nipy_spectral', common_norm=False, alpha=0.6)
+    sns.kdeplot(
+        x=weight,
+        y=height,
+        ax=ax,
+        n_levels=6,
+        thresh=0,
+        cbar=True,
+        fill=True,
+        cmap="nipy_spectral",
+        common_norm=False,
+        alpha=0.6,
+    )
     plt.show()
 
 
