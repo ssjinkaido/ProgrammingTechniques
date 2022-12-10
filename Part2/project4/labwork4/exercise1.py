@@ -1,3 +1,4 @@
+from __future__ import annotations
 class Address:
     def __init__(self, city: str, zip_code:int):
         self.__city = city
@@ -39,17 +40,17 @@ class CoffeeShop:
     @property
     def address(self) -> Address:
         return self.__address
+
+    @address.setter(self, address: Address)-> None:
+        self.__address = address
     
-    def change_address(self, city: str, zip_code:int) -> None:
-        self.__address.change_address(city, zip_code)
-        
 if __name__ == '__main__':
-    address = Address('Ha Noi', 111000)
-    cs = CoffeeShop('La Viet',address)
+    cs = CoffeeShop('La Viet', Address('Ha Noi', 111000))
     print(f'CoffeeShop name is "{cs.name}"')
     print(f'CoffeeShop is in "{cs.address.city}"')
     print(f'CoffeeShop zip code is {cs.address.zip_code}')
-    cs.change_address('Neuville de Poitou', 86170)
+    cs.address = Address('Neuville de Poitou', 86170)
+    cs.address.change_address('Neuville de Poitou', 86170)
     print(f'CoffeeShop name is "{cs.name}"')
     print(f'CoffeeShop is in "{cs.address.city}"')
     print(f'CoffeeShop zip code is {cs.address.zip_code}')

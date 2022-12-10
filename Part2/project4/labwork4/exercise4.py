@@ -2,11 +2,6 @@ from abc import ABC, abstractmethod
 
 
 class ICoffeeShop(ABC):
-    # traditional shops
-    @abstractmethod
-    def brew_machine_pour_over(self):
-        pass
-
     # third wave shops
     @abstractmethod
     def brew_filter_coffee(self):
@@ -18,11 +13,19 @@ class ITraditional(ICoffeeShop):
     def brew_by_espresso_machine(self):
         pass
 
+    @abstractmethod
+    def brew_machine_pour_over(self):
+        pass
+
 class IThirdWave(ICoffeeShop):
     # third wave shops
     @abstractmethod
     def brew_by_hand_held_espresso_maker(self):
         print("brewing by hand held expresso maker")
+
+    @abstractmethod
+    def brew_manual_pour_over(self):
+        pass
 
 class Traditional(ITraditional):
     def brew_by_espresso_machine(self):
@@ -48,18 +51,21 @@ class ThirdWave(IThirdWave):
 if __name__ == "__main__":
     def print_all(coffee_shop: ICoffeeShop):
         """Try all the methods..."""
-        def handle_exception(func):
-            """Print the exception if one is raised"""
-            try:
-                func()
-            except NotImplementedError as exception:
-                print(f'-> {exception}')
 
-        handle_exception(coffee_shop.brew_by_espresso_machine)
-        handle_exception(coffee_shop.brew_machine_pour_over)
-        handle_exception(coffee_shop.brew_by_hand_held_espresso_maker)
-        handle_exception(coffee_shop.brew_manual_pour_over)
-        coffee_shop.brew_filter_coffee()
+        def print_traditional(coffee_shop: ITraditional):
+            coffee_shop.brew_by_espresso_machine()
+            coffee_shop.brew_machine_pour_over()
+            coffee_shop.brew_filter_coffee()
+        
+        def print_third_wave(coffee_shop: IThirdWave):
+            coffee_shop.brew_by_hand_held_espresso_maker()
+            coffee_shop.brew_manual_pour_over()
+            coffee_shop.brew_filter_coffee()
+        
+        if isinstance(coffee_shop, ITraditional):
+            print_traditional(coffee_shop)
+        if isinstance(coffee_shop, IThirdWave):
+            print_third_wave(coffee_shop)
 
     print('For a Traditional Coffee Shop...')
     print_all(Traditional())

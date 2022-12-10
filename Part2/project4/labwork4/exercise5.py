@@ -1,71 +1,78 @@
+from __future__ import annotations
 from abc import ABC, abstractmethod
 class ICoffeeShop(ABC):
-    def __init__(self, name: str):
-        self.__name = name
-
     @property
-    def name(self):
-        return self.__name
+    @abstractmethod
+    def name(self: ICoffeeShop) -> str:
+        ...
 
     @abstractmethod
-    def get_payment(self):
-        pass
+    def get_payment(self: ICoffeeShop)->None:
+        ...
 
     @abstractmethod
-    def deliver_coffee(self):
-        pass
+    def deliver_coffee(self: ICoffeeShop)->None:
+        ...
 
     
 class CoffeeShop(ICoffeeShop):
-    def get_payment(self):
-        print(f"{self._ICoffeeShop__name} gets the payment")
+    def __init__(self: CoffeeShop, name: str):
+        self.__name = name
 
-    def deliver_coffee(self):
-        print(f"{self._ICoffeeShop__name} delivers the coffee")
+    @property
+    def name(self) -> str:
+        return self.__name
 
-class ICustomer(ABC):
+    def get_payment(self: CoffeeShop):
+        print(f"{self.__name} gets the payment")
+
+    def deliver_coffee(self: CoffeeShop):
+        print(f"{self.__name} delivers the coffee")
+
+class ICustomer(ABC):  
+    @property
+    @abstractmethod
+    def name(self: ICustomer) -> str:
+        ...
+
+
+    @abstractmethod
+    def make_payment(self: ICustomer)->None:
+        ...
+
+    @abstractmethod
+    def receive_coffee(self: ICustomer)->None:
+        ...
+
+
+class Customer(ICustomer):
     def __init__(self, name: str):
         self.__name = name
         
     @property
-    def name(self):
+    def name(self) -> str:
         return self.__name
-        
-    @abstractmethod
-    def make_payment(self):
-        pass
-
-    @abstractmethod
-    def receive_coffee(self):
-        pass
-
-
-class Customer(ICustomer):
 
     def make_payment(self):
-        print(f"{self._ICustomer__name} makes the payment")
+        print(f"{self.__name} makes the payment")
 
     def receive_coffee(self):
-        print(f"{self._ICustomer__name} receives the coffee")
+        print(f"{self.__name} receives the coffee")
 
 class IDelivery(ABC):
-    def __init__(self, customer: ICustomer, coffee_shop: ICoffeeShop):
-        self.__customer = customer
-        self.__coffee_shop = coffee_shop
-
     @abstractmethod
-    def delivers(self):
-        pass
+    def delivers(self: IDelivery, coffee_shop: ICoffeeShop, customer: ICustomer)->None:
+        ...
 
 
 class Delivery(IDelivery):
 
-    def delivers(self):
-        self._IDelivery__customer.make_payment()
-        self._IDelivery__coffee_shop.get_payment()
-        self._IDelivery__coffee_shop.deliver_coffee()
-        self._IDelivery__customer.receive_coffee()
+    def delivers(self, coffee_shop: ICoffeeShop, customer: ICustomer):
+        customer.make_payment()
+        coffee_shop.get_payment()
+        coffee_shop.deliver_coffee()
+        customer.receive_coffee()
 
 
 if __name__ == '__main__':
-    Delivery(Customer('Uncle Bob'), CoffeeShop('La Viet')).delivers()
+    Delivery().delivers(CoffeeShop('La Viet'), Customer('Uncle Bob'))
