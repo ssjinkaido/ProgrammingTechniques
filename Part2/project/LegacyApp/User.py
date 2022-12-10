@@ -1,5 +1,16 @@
+from LegacyApp import Client
+from datetime import datetime
+
+
 class User:
-    def __init__(self, client, date_of_birth, email_address, first_name, surname):
+    def __init__(
+        self,
+        client: Client,
+        date_of_birth: datetime,
+        email_address: str,
+        first_name: str,
+        surname: str,
+    ):
         self.client = client
         self.date_of_birth = date_of_birth
         self.email_address = email_address

@@ -11,7 +11,9 @@ class UserService:
 
     # THIS METHOD SHOULD STAY STATIC, with same prototype...
     @staticmethod
-    def add_user(firname, surname, email, dateOfBirth, clientId):
+    def add_user(
+        firname: str, surname: str, email: str, dateOfBirth: datetime, clientId: int
+    ):
         # but you may add typing and you should modify its implementation...
         if (firname == "") or (surname == ""):
             return False
@@ -61,3 +63,6 @@ class UserService:
         UserDataAccess.add_user(user)
 
         return True
+
+
+# client should be interface?

@@ -11,7 +11,7 @@ class ClientRepository:
     __table_datatypes = [str, ClientStatus]
 
     @classmethod
-    def static_init(cls):
+    def static_init(cls) -> None:
         cls.__clients = DBAccess.add_table(
             cls.__table_name, cls.__table_description, cls.__table_datatypes
         )
@@ -26,7 +26,7 @@ class ClientRepository:
         cls.__clients.add_entry(10, ["Muriel Labeille", ClientStatus.NORMAL])
 
     @classmethod
-    def get_by_id(cls, id):
+    def get_by_id(cls, id) -> None:
         entry = cls.__clients.get_entry(id)
         return Client(
             id, entry.get_value_by_column("name"), entry.get_value_by_column("status")
