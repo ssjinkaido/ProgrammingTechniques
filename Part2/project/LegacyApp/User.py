@@ -1,12 +1,16 @@
-from LegacyApp import Client
-from datetime import datetime
+from __future__ import annotations
+import datetime
+from .Client import IClient
+from typing import TypeVar
+
+T = TypeVar("T", bound="IClient")
 
 
 class User:
     def __init__(
         self,
-        client: Client,
-        date_of_birth: datetime,
+        client: IClient,
+        date_of_birth: datetime.date,
         email_address: str,
         first_name: str,
         surname: str,
@@ -16,5 +20,5 @@ class User:
         self.email_address = email_address
         self.first_name = first_name
         self.surname = surname
-        self.has_credit_limit = None
+        self.has_credit_limit = False
         self.credit_limit = -1

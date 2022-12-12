@@ -1,6 +1,9 @@
 from __future__ import annotations
 from .ClientStatus import ClientStatus
 from abc import ABC, abstractmethod
+from typing import TypeVar, Generic
+
+T = TypeVar("T", bound="IClient")
 
 
 class IClient(ABC):
@@ -36,7 +39,7 @@ class IClient(ABC):
 
 
 class ClientVIP(IClient):
-    def __init__(self, id: int = -1, name: str = "", status=ClientStatus.VIP) -> None:
+    def __init__(self, id: int = 1, name: str = "", status=ClientStatus.VIP) -> None:
         self.__id = id
         self.__name = name
         self.__status = status
@@ -46,59 +49,28 @@ class ClientVIP(IClient):
         return self.__id
 
     @id.setter
-    def id(self, id) -> None:
-        self.__id = id
+    def id(self, value) -> None:
+        self.__id = value
 
     @property
     def name(self) -> str:
         return self.__name
 
     @name.setter
-    def name(self, name) -> None:
-        self.__name = name
+    def name(self, value) -> None:
+        self.__name = value
 
     @property
     def status(self) -> ClientStatus:
         return self.__status
 
     @status.setter
-    def status(self, status) -> None:
-        self.__status = status
-
-
-class Client(IClient):
-    def __init__(self, id: int = -1, name: str = "", status=ClientStatus.VIP) -> None:
-        self.__id = id
-        self.__name = name
-        self.__status = status
-
-    @property
-    def id(self) -> int:
-        return self.__id
-
-    @id.setter
-    def id(self, id) -> None:
-        self.__id = id
-
-    @property
-    def name(self) -> str:
-        return self.__name
-
-    @name.setter
-    def name(self, name) -> None:
-        self.__name = name
-
-    @property
-    def status(self) -> ClientStatus:
-        return self.__status
-
-    @status.setter
-    def status(self, status) -> None:
-        self.__status = status
+    def status(self, value) -> None:
+        self.__status = value
 
 
 class ClientIP(IClient):
-    def __init__(self, id: int = -1, name: str = "", status=ClientStatus.IP) -> None:
+    def __init__(self, id: int = 1, name: str = "", status=ClientStatus.IP) -> None:
         self.__id = id
         self.__name = name
         self.__status = status
@@ -108,30 +80,28 @@ class ClientIP(IClient):
         return self.__id
 
     @id.setter
-    def id(self, id) -> None:
-        self.__id = id
+    def id(self, value) -> None:
+        self.__id = value
 
     @property
     def name(self) -> str:
         return self.__name
 
     @name.setter
-    def name(self, name) -> None:
-        self.__name = name
+    def name(self, value) -> None:
+        self.__name = value
 
     @property
     def status(self) -> ClientStatus:
         return self.__status
 
     @status.setter
-    def status(self, status) -> None:
-        self.__status = status
+    def status(self, value) -> None:
+        self.__status = value
 
 
 class ClientNormal(IClient):
-    def __init__(
-        self, id: int = -1, name: str = "", status=ClientStatus.NORMAL
-    ) -> None:
+    def __init__(self, id: int = 1, name: str = "", status=ClientStatus.NORMAL) -> None:
         self.__id = id
         self.__name = name
         self.__status = status
@@ -141,29 +111,29 @@ class ClientNormal(IClient):
         return self.__id
 
     @id.setter
-    def id(self, id) -> None:
-        self.__id = id
+    def id(self, value) -> None:
+        self.__id = value
 
     @property
     def name(self) -> str:
         return self.__name
 
     @name.setter
-    def name(self, name) -> None:
-        self.__name = name
+    def name(self, value) -> None:
+        self.__name = value
 
     @property
     def status(self) -> ClientStatus:
         return self.__status
 
     @status.setter
-    def status(self, status) -> None:
-        self.__status = status
+    def status(self, value) -> None:
+        self.__status = value
 
 
 class ClientUndefined(IClient):
     def __init__(
-        self, id: int = -1, name: str = "", status=ClientStatus.UNDEFINED
+        self, id: int = 1, name: str = "", status=ClientStatus.UNDEFINED
     ) -> None:
         self.__id = id
         self.__name = name
@@ -174,21 +144,21 @@ class ClientUndefined(IClient):
         return self.__id
 
     @id.setter
-    def id(self, id) -> None:
-        self.__id = id
+    def id(self, value) -> None:
+        self.__id = value
 
     @property
     def name(self) -> str:
         return self.__name
 
     @name.setter
-    def name(self, name) -> None:
-        self.__name = name
+    def name(self, value) -> None:
+        self.__name = value
 
     @property
     def status(self) -> ClientStatus:
         return self.__status
 
     @status.setter
-    def status(self, status) -> None:
-        self.__status = status
+    def status(self, value) -> None:
+        self.__status = value

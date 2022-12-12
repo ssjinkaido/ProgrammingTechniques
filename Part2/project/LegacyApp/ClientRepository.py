@@ -1,17 +1,38 @@
-from DB import DBAccess
-from .Client import Client
+from __future__ import annotations
+from DB import DBAccess, DBTable
+from .Client import ClientVIP, ClientIP, ClientNormal, ClientUndefined, IClient
 from .ClientStatus import ClientStatus
 from .tools import static_initializer
+from typing import TypeVar, Type
+
+
+class ClientFactory:
+    T = TypeVar("T", bound="IClient")
+
+    @staticmethod
+    def get_client(id: int, name: str, status: ClientStatus) -> IClient:
+        if status == ClientStatus.VIP:
+            return ClientVIP(id, name, status)
+        elif status == ClientStatus.IP:
+            return ClientIP(id, name, status)
+        elif status == ClientStatus.NORMAL:
+            return ClientNormal(id, name, status)
+        elif status == ClientStatus.UNDEFINED:
+            return ClientUndefined(id, name, status)
+
+        return ClientUndefined(id, name, status)
 
 
 @static_initializer
 class ClientRepository:
+    T = TypeVar("T", bound="IClient")
     __table_name = "clients"
     __table_description = ["name", "status"]
     __table_datatypes = [str, ClientStatus]
+    __clients: DBTable
 
     @classmethod
-    def static_init(cls) -> None:
+    def static_init(cls: Type[ClientRepository]) -> None:
         cls.__clients = DBAccess.add_table(
             cls.__table_name, cls.__table_description, cls.__table_datatypes
         )
@@ -26,8 +47,8 @@ class ClientRepository:
         cls.__clients.add_entry(10, ["Muriel Labeille", ClientStatus.NORMAL])
 
     @classmethod
-    def get_by_id(cls, id) -> None:
+    def get_by_id(cls: Type[ClientRepository], id: int) -> IClient:
         entry = cls.__clients.get_entry(id)
-        return Client(
+        return ClientFactory.get_client(
             id, entry.get_value_by_column("name"), entry.get_value_by_column("status")
         )

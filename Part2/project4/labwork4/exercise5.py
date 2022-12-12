@@ -67,7 +67,7 @@ class IDelivery(ABC):
 
 class Delivery(IDelivery):
 
-    def delivers(self, coffee_shop: ICoffeeShop, customer: ICustomer):
+    def delivers(self: Delivery, coffee_shop: ICoffeeShop, customer: ICustomer):
         customer.make_payment()
         coffee_shop.get_payment()
         coffee_shop.deliver_coffee()
