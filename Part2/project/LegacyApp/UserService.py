@@ -7,9 +7,6 @@ from .ClientRepository import ClientRepository
 from .User import User
 from .UserCreditService import UserCreditServiceClient
 from .UserDataAccess import UserDataAccess
-from typing import TypeVar, Type
-
-T = TypeVar("T", bound="IClient")
 
 
 def get_credit_limit(user: User) -> None:
@@ -75,7 +72,7 @@ def get_client(clientId: int) -> IClient:
 
 
 def create_user(
-    firname: str, surname: str, email: str, dateOfBirth: datetime.date, client: T
+    firname: str, surname: str, email: str, dateOfBirth: datetime.date, client: IClient
 ) -> User:
     user = User(
         client=client,
@@ -103,7 +100,7 @@ class UserService:
         email: str,
         dateOfBirth: datetime.date,
         clientId: int,
-    ):
+    ) -> bool:
         # but you may add typing and you should modify its implementation...
         if not validate_input(firname, surname, email, dateOfBirth):
             return False
@@ -113,7 +110,6 @@ class UserService:
         get_credit_limit(user)
         if not validate_user(user):
             return False
-        print(vars(user))
         UserDataAccess.add_user(user)
 
         return True

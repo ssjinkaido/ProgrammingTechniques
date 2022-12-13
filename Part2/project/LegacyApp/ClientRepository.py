@@ -1,14 +1,12 @@
 from __future__ import annotations
-from DB import DBAccess, DBTable
+from DB.DBAccess import DBAccess, DBTable
 from .Client import ClientVIP, ClientIP, ClientNormal, ClientUndefined, IClient
 from .ClientStatus import ClientStatus
 from .tools import static_initializer
-from typing import TypeVar, Type
+from typing import Type
 
 
 class ClientFactory:
-    T = TypeVar("T", bound="IClient")
-
     @staticmethod
     def get_client(id: int, name: str, status: ClientStatus) -> IClient:
         if status == ClientStatus.VIP:
@@ -25,7 +23,6 @@ class ClientFactory:
 
 @static_initializer
 class ClientRepository:
-    T = TypeVar("T", bound="IClient")
     __table_name = "clients"
     __table_description = ["name", "status"]
     __table_datatypes = [str, ClientStatus]

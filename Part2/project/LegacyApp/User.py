@@ -3,12 +3,10 @@ import datetime
 from .Client import IClient
 from typing import TypeVar
 
-T = TypeVar("T", bound="IClient")
-
 
 class User:
     def __init__(
-        self,
+        self: User,
         client: IClient,
         date_of_birth: datetime.date,
         email_address: str,
