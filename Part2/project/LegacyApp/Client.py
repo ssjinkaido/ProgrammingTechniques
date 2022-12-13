@@ -35,117 +35,9 @@ class IClient(ABC):
         ...
 
 
-class ClientVIP(IClient):
+class Client(IClient):
     def __init__(
-        self: ClientVIP,
-        id: int = 1,
-        name: str = "",
-        status: ClientStatus = ClientStatus.VIP,
-    ) -> None:
-        self.__id = id
-        self.__name = name
-        self.__status = status
-
-    @property
-    def id(self: ClientVIP) -> int:
-        return self.__id
-
-    @id.setter
-    def id(self: ClientVIP, value: int) -> None:
-        self.__id = value
-
-    @property
-    def name(self: ClientVIP) -> str:
-        return self.__name
-
-    @name.setter
-    def name(self: ClientVIP, value: str) -> None:
-        self.__name = value
-
-    @property
-    def status(self: ClientVIP) -> ClientStatus:
-        return self.__status
-
-    @status.setter
-    def status(self: ClientVIP, value: ClientStatus) -> None:
-        self.__status = value
-
-
-class ClientIP(IClient):
-    def __init__(
-        self: ClientIP,
-        id: int = 1,
-        name: str = "",
-        status: ClientStatus = ClientStatus.IP,
-    ) -> None:
-        self.__id = id
-        self.__name = name
-        self.__status = status
-
-    @property
-    def id(self: ClientIP) -> int:
-        return self.__id
-
-    @id.setter
-    def id(self: ClientIP, value: int) -> None:
-        self.__id = value
-
-    @property
-    def name(self: ClientIP) -> str:
-        return self.__name
-
-    @name.setter
-    def name(self: ClientIP, value: str) -> None:
-        self.__name = value
-
-    @property
-    def status(self: ClientIP) -> ClientStatus:
-        return self.__status
-
-    @status.setter
-    def status(self: ClientIP, value: ClientStatus) -> None:
-        self.__status = value
-
-
-class ClientNormal(IClient):
-    def __init__(
-        self: ClientNormal,
-        id: int = 1,
-        name: str = "",
-        status: ClientStatus = ClientStatus.NORMAL,
-    ) -> None:
-        self.__id = id
-        self.__name = name
-        self.__status = status
-
-    @property
-    def id(self: ClientNormal) -> int:
-        return self.__id
-
-    @id.setter
-    def id(self: ClientNormal, value: int) -> None:
-        self.__id = value
-
-    @property
-    def name(self: ClientNormal) -> str:
-        return self.__name
-
-    @name.setter
-    def name(self: ClientNormal, value: str) -> None:
-        self.__name = value
-
-    @property
-    def status(self: ClientNormal) -> ClientStatus:
-        return self.__status
-
-    @status.setter
-    def status(self: ClientNormal, value: ClientStatus) -> None:
-        self.__status = value
-
-
-class ClientUndefined(IClient):
-    def __init__(
-        self: ClientUndefined,
+        self: Client,
         id: int = 1,
         name: str = "",
         status: ClientStatus = ClientStatus.UNDEFINED,
@@ -155,25 +47,25 @@ class ClientUndefined(IClient):
         self.__status = status
 
     @property
-    def id(self: ClientUndefined) -> int:
+    def id(self: Client) -> int:
         return self.__id
 
     @id.setter
-    def id(self: ClientUndefined, value: int) -> None:
+    def id(self: Client, value: int) -> None:
         self.__id = value
 
     @property
-    def name(self: ClientUndefined) -> str:
+    def name(self: Client) -> str:
         return self.__name
 
     @name.setter
-    def name(self: ClientUndefined, value: str) -> None:
+    def name(self: Client, value: str) -> None:
         self.__name = value
 
     @property
-    def status(self: ClientUndefined) -> ClientStatus:
+    def status(self: Client) -> ClientStatus:
         return self.__status
 
     @status.setter
-    def status(self: ClientUndefined, value: ClientStatus) -> None:
+    def status(self: Client, value: ClientStatus) -> None:
         self.__status = value

@@ -1,5 +1,5 @@
 from .UserService import UserService
-from .Client import ClientIP, ClientNormal, ClientVIP, ClientUndefined
+from .Client import Client, IClient
 from .ClientStatus import ClientStatus
 from .ClientRepository import ClientRepository
 from .User import User

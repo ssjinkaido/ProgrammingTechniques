@@ -10,23 +10,18 @@ from .UserDataAccess import UserDataAccess
 
 
 def get_credit_limit(user: User) -> None:
+    with UserCreditServiceClient() as user_credit_service:
+        credit_limit = user_credit_service.get_credit_limit(
+            user.first_name, user.surname, user.date_of_birth
+        )
     if user.client.status == ClientStatus.VIP:
         user.has_credit_limit = False
     elif user.client.status == ClientStatus.IP:
         user.has_credit_limit = True
-        with UserCreditServiceClient() as user_credit_service:
-            credit_limit = user_credit_service.get_credit_limit(
-                user.first_name, user.surname, user.date_of_birth
-            )
-            user.credit_limit = credit_limit * 2
+        user.credit_limit = credit_limit * 2
     else:
         user.has_credit_limit = True
-
-        with UserCreditServiceClient() as user_credit_service:
-            credit_limit = user_credit_service.get_credit_limit(
-                user.first_name, user.surname, user.date_of_birth
-            )
-            user.credit_limit = credit_limit
+        user.credit_limit = credit_limit
 
 
 def validate_name(firname: str, surname: str) -> bool:
@@ -67,6 +62,7 @@ def validate_input(
 
 
 def get_client(clientId: int) -> IClient:
+    a = ClientRepository()
     client = ClientRepository.get_by_id(clientId)
     return client
 
@@ -111,5 +107,4 @@ class UserService:
         if not validate_user(user):
             return False
         UserDataAccess.add_user(user)
-
         return True

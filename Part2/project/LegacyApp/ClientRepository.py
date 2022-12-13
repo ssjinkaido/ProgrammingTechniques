@@ -1,6 +1,6 @@
 from __future__ import annotations
 from DB.DBAccess import DBAccess, DBTable
-from .Client import ClientVIP, ClientIP, ClientNormal, ClientUndefined, IClient
+from .Client import IClient, Client
 from .ClientStatus import ClientStatus
 from .tools import static_initializer
 from typing import Type
@@ -10,15 +10,12 @@ class ClientFactory:
     @staticmethod
     def get_client(id: int, name: str, status: ClientStatus) -> IClient:
         if status == ClientStatus.VIP:
-            return ClientVIP(id, name, status)
-        elif status == ClientStatus.IP:
-            return ClientIP(id, name, status)
-        elif status == ClientStatus.NORMAL:
-            return ClientNormal(id, name, status)
-        elif status == ClientStatus.UNDEFINED:
-            return ClientUndefined(id, name, status)
-
-        return ClientUndefined(id, name, status)
+            return Client(id, name, status)
+        if status == ClientStatus.IP:
+            return Client(id, name, status)
+        if status == ClientStatus.NORMAL:
+            return Client(id, name, status)
+        return Client(id, name, status=ClientStatus.UNDEFINED)
 
 
 @static_initializer
