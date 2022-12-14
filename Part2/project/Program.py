@@ -6,14 +6,13 @@ from LegacyApp import UserService
 
 
 class Program:
+
     @staticmethod
     def prove_add_user(args):
         user_service = UserService()
-        add_result = user_service.add_user(
-            "Bob", "Sponge", "spongebob@spongemail.com", datetime.date(1969, 12, 4), 3
-        )
+        add_result = user_service.add_user("Bob", "Sponge", "spongebob@spongemail.com", datetime.date(1969, 12, 4), 3)
         message = "successful" if add_result else "unsuccessful"
-        print(f"Adding spongebob was {message}")
+        print(f'Adding spongebob was {message}')
 
     @staticmethod
     def main(args):

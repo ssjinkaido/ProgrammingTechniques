@@ -14,34 +14,27 @@ from LegacyApp.UserService import (
 
 
 class TestUserService(unittest.TestCase):
-    # def create_client_instance(self, id, name, status):
-    #     return Client(id, name, status)
-
-    # def create_user_with_client(
-    #     self, client, date_of_birth, email_address, first_name, surname
-    # ):
-    #     return User(client, date_of_birth, email_address, first_name, surname)
     def create_client_instance(self, id, name, status):
-        client = MagicMock()
-        client.id = id
-        client.name = name
-        client.status = status
-        return client
+        instance_client = MagicMock()
+        instance_client.id = id
+        instance_client.name = name
+        instance_client.status = status
+        return instance_client
 
-    def create_user_with_client(
+    def create_user_instance_with_client(
         self, client, date_of_birth, email_address, first_name, surname
     ):
-        user = MagicMock()
-        user.client = client
-        user.email_address = email_address
-        user.first_name = first_name
-        user.surname = surname
-        user.date_of_birth = date_of_birth
-        user.credit_limit = -1
-        user.has_credit_limit = None
-        return user
+        instance_user = MagicMock()
+        instance_user.client = client
+        instance_user.email_address = email_address
+        instance_user.first_name = first_name
+        instance_user.surname = surname
+        instance_user.date_of_birth = date_of_birth
+        instance_user.credit_limit = -1
+        instance_user.has_credit_limit = None
+        return instance_user
 
-    def create_user_service(self):
+    def create_user_service_instance(self):
         instance_user_service = UserService()
         return instance_user_service
 
@@ -78,7 +71,7 @@ class TestUserService(unittest.TestCase):
 
     def test_user_ip_credit_limit(self):
         client = self.create_client_instance(1, "aaa", ClientStatus.IP)
-        user = self.create_user_with_client(
+        user = self.create_user_instance_with_client(
             client, datetime.date(1969, 12, 4), "aaa@gmail.com", "John", "Smith"
         )
         get_credit_limit(user)
@@ -87,7 +80,7 @@ class TestUserService(unittest.TestCase):
 
     def test_user_vip_credit_limit(self):
         client = self.create_client_instance(1, "aaa", ClientStatus.VIP)
-        user = self.create_user_with_client(
+        user = self.create_user_instance_with_client(
             client, datetime.date(1969, 12, 4), "aaa@gmail.com", "John", "Smith"
         )
         get_credit_limit(user)
@@ -96,7 +89,7 @@ class TestUserService(unittest.TestCase):
 
     def test_user_normal_credit_limit(self):
         client = self.create_client_instance(1, "aaa", ClientStatus.NORMAL)
-        user = self.create_user_with_client(
+        user = self.create_user_instance_with_client(
             client, datetime.date(1969, 12, 4), "aaa@gmail.com", "John", "Smith"
         )
         get_credit_limit(user)
@@ -105,7 +98,7 @@ class TestUserService(unittest.TestCase):
 
     def test_user_undefined_credit_limit(self):
         client = self.create_client_instance(1, "aaa", ClientStatus.UNDEFINED)
-        user = self.create_user_with_client(
+        user = self.create_user_instance_with_client(
             client, datetime.date(1969, 12, 4), "aaa@gmail.com", "John", "Smith"
         )
         get_credit_limit(user)
@@ -114,7 +107,7 @@ class TestUserService(unittest.TestCase):
 
     def test_validate_vip_user(self):
         client = self.create_client_instance(1, "aaa", ClientStatus.VIP)
-        user = self.create_user_with_client(
+        user = self.create_user_instance_with_client(
             client, datetime.date(1969, 12, 4), "aaa@gmail.com", "John", "Smith"
         )
         get_credit_limit(user)
@@ -122,7 +115,7 @@ class TestUserService(unittest.TestCase):
 
     def test_validate_ip_user(self):
         client = self.create_client_instance(1, "aaa", ClientStatus.IP)
-        user = self.create_user_with_client(
+        user = self.create_user_instance_with_client(
             client, datetime.date(1969, 12, 4), "aaa@gmail.com", "John", "Smith"
         )
         get_credit_limit(user)
@@ -130,7 +123,7 @@ class TestUserService(unittest.TestCase):
 
     def test_validate_normal_user(self):
         client = self.create_client_instance(1, "aaa", ClientStatus.NORMAL)
-        user = self.create_user_with_client(
+        user = self.create_user_instance_with_client(
             client, datetime.date(1969, 12, 4), "aaa@gmail.com", "John", "Smith"
         )
         get_credit_limit(user)
@@ -138,21 +131,21 @@ class TestUserService(unittest.TestCase):
 
     def test_validate_undefined_user(self):
         client = self.create_client_instance(1, "aaa", ClientStatus.UNDEFINED)
-        user = self.create_user_with_client(
+        user = self.create_user_instance_with_client(
             client, datetime.date(1969, 12, 4), "aaa@gmail.com", "John", "Smith"
         )
         get_credit_limit(user)
         self.assertTrue(validate_user(user))
 
     def test_add_user_one(self):
-        user_service = self.create_user_service()
+        user_service = self.create_user_service_instance()
         result = user_service.add_user(
             "John", "Smith", "aaa@gmail.com", datetime.date(1969, 12, 4), 3
         )
         self.assertEqual(result, True)
 
     def test_add_user_two(self):
-        user_service = self.create_user_service()
+        user_service = self.create_user_service_instance()
         result = user_service.add_user(
             "Mary", "Avicii", "mary@gmail.com", datetime.date(2005, 12, 4), 1
         )
