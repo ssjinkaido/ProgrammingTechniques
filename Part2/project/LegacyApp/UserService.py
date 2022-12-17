@@ -62,7 +62,6 @@ def validate_input(
 
 
 def get_client(clientId: int) -> IClient:
-    a = ClientRepository()
     client = ClientRepository.get_by_id(clientId)
     return client
 
@@ -75,7 +74,7 @@ def create_user(
         date_of_birth=dateOfBirth,
         email_address=email,
         first_name=firname,
-        surname=surname,
+        surname=surname
     )
     return user
 
@@ -90,13 +89,7 @@ class UserService:
 
     # THIS METHOD SHOULD STAY STATIC, with same prototype...
     @staticmethod
-    def add_user(
-        firname: str,
-        surname: str,
-        email: str,
-        dateOfBirth: datetime.date,
-        clientId: int,
-    ) -> bool:
+    def add_user(firname: str, surname: str, email: str, dateOfBirth: datetime.date, clientId:int) -> bool:
         # but you may add typing and you should modify its implementation...
         if not validate_input(firname, surname, email, dateOfBirth):
             return False

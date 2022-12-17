@@ -6,18 +6,6 @@ from .tools import static_initializer
 from typing import Type
 
 
-class ClientFactory:
-    @staticmethod
-    def get_client(id: int, name: str, status: ClientStatus) -> IClient:
-        if status == ClientStatus.VIP:
-            return Client(id, name, status)
-        if status == ClientStatus.IP:
-            return Client(id, name, status)
-        if status == ClientStatus.NORMAL:
-            return Client(id, name, status)
-        return Client(id, name, status=ClientStatus.UNDEFINED)
-
-
 @static_initializer
 class ClientRepository:
     __table_name = "clients"
@@ -43,6 +31,6 @@ class ClientRepository:
     @classmethod
     def get_by_id(cls: Type[ClientRepository], id: int) -> IClient:
         entry = cls.__clients.get_entry(id)
-        return ClientFactory.get_client(
+        return Client(
             id, entry.get_value_by_column("name"), entry.get_value_by_column("status")
         )

@@ -59,22 +59,22 @@ class IUser(ABC):
     @property
     @abstractmethod
     def has_credit_limit(self: IUser) -> Union[bool, None]:
-        return self.__has_credit_limit
+        ...
 
     @has_credit_limit.setter
     @abstractmethod
     def has_credit_limit(self: IUser, value: Union[bool, None]) -> None:
-        self.__has_credit_limit = value
+        ...
 
     @property
     @abstractmethod
     def credit_limit(self: IUser) -> int:
-        return self.__credit_limit
+        ...
 
     @credit_limit.setter
     @abstractmethod
     def credit_limit(self: IUser, value: int) -> None:
-        self.__credit_limit = value
+        ...
 
 
 class User(IUser):
@@ -91,7 +91,7 @@ class User(IUser):
         self.__email_address = email_address
         self.__first_name = first_name
         self.__surname = surname
-        self.__has_credit_limit = None
+        self.__has_credit_limit: Optional[bool] = None
         self.__credit_limit = -1
 
     @property
@@ -135,11 +135,11 @@ class User(IUser):
         self.__surname = value
 
     @property
-    def has_credit_limit(self: User) -> Union[bool, None]:
+    def has_credit_limit(self: User) -> Optional[bool]:
         return self.__has_credit_limit
 
     @has_credit_limit.setter
-    def has_credit_limit(self: User, value: Union[bool, None]) -> None:
+    def has_credit_limit(self: User, value: Optional[bool] = None) -> None:
         self.__has_credit_limit = value
 
     @property
