@@ -89,7 +89,7 @@ class UserService:
 
     # THIS METHOD SHOULD STAY STATIC, with same prototype...
     @staticmethod
-    def add_user(firname: str, surname: str, email: str, dateOfBirth: datetime.date, clientId:int) -> bool:
+    def add_user(firname: str, surname: str, email: str, dateOfBirth: datetime.date, clientId: int) -> bool:
         # but you may add typing and you should modify its implementation...
         if not validate_input(firname, surname, email, dateOfBirth):
             return False
